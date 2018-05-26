@@ -1,0 +1,48 @@
+{
+  "name": "chat-1",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "bcrypt": "^2.0.1",
+    "bluebird": "^3.5.1",
+    "chance": "^1.0.11",
+    "eslint": "^4.9.0",
+    "eslint-config-airbnb": "^16.0.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "express": "^4.16.3",
+    "prop-types": "*",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-redux": "^5.0.6",
+    "react-scripts": "1.0.14",
+    "redux": "^3.7.2",
+    "redux-saga": "^0.15.6",
+    "rethinkdb": "^2.3.3",
+    "rethinkdb-websocket-server": "^0.6.0",
+    "rethinkdb-websocket-server-test": "^0.6.2",
+    "ws": "^3.2.0"
+  },
+  "scripts": {
+    "serve": "babel-node server/app.js --presets=es2017,react",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "resetdb": "babel-node server/resetdb.js"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^21.2.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2017": "^6.24.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
+    "jest": "21.3.0-beta.2",
+    "jest-environment-jsdom": "^21.2.1",
+    "react-test-renderer": "^16.0.0"
+  }
+}
