@@ -16,7 +16,6 @@ const saveMessage = (data) => {
     if (err) throw err
     rethinkdb.table('messages').insert({ body: data.message, userId: data.author, createdAt: rethinkdb.now() }).run(conn, (insertErr, res) => {
       if (insertErr) throw insertErr
-      console.log(res)
     })
 
   })
@@ -70,3 +69,4 @@ wss.on('connection', (ws) => {
     }, ws)
   })
 })
+app.listen(3000)
