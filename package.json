@@ -22,6 +22,7 @@
     "rethinkdb": "^2.3.3",
     "rethinkdb-websocket-server": "^0.6.0",
     "rethinkdb-websocket-server-test": "^0.6.2",
+    "superagent": "^3.8.3",
     "ws": "^3.2.0"
   },
   "scripts": {

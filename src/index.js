@@ -1,35 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
-import createSagaMiddleware from 'redux-saga'
+
 
 import './index.css'
-import App from './App'
+// import App from './App'
+import AuthWrapper from './AuthWrapper'
 // import registerServiceWorker from './registerServiceWorker'
-import reducers from './reducers'
-import handleNewMessage from './sagas'
-import setupSocket from './sockets'
-import username from './utils/name'
-
-const sagaMiddleware = createSagaMiddleware()
-
-const store = createStore(
-  reducers,
-  applyMiddleware(sagaMiddleware)
+// import handleNewMessage from './sagas'
+// import setupSocket from './sockets'
+// import username from './utils/name'
+window.localStorage.setItem('userId', 'someone')
+ReactDOM.render(
+  <AuthWrapper />,
+  document.getElementById('root')
 )
 
-const socket = setupSocket(store.dispatch, username)
-if (socket) {
-  sagaMiddleware.run(handleNewMessage, { socket, username })
-
-  ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.getElementById('root')
-  )
-}
 
 // Turing off Service worker now
 // registerServiceWorker()
