@@ -1,8 +1,15 @@
 import rethinkdb from 'rethinkdb'
 import express from 'express'
+import { r } from 'rethinkdb-websocket-server'
+import Promise from 'bluebird'
 import cfg from './config.json'
+import { AuthManager } from './AuthManager'
 
 const WebSocket = require('ws')
+
+const dbOpts = { host: cfg.dbHost, port: cfg.dbPort, db: cfg.dbName }
+const dbConnPromise = Promise.promisify(r.connect)(dbOpts)
+const authManager = new AuthManager(dbConnPromise)
 
 const app = express()
 app.use('/', express.static('build'))
@@ -16,6 +23,7 @@ const saveMessage = (data) => {
     if (err) throw err
     rethinkdb.table('messages').insert({ body: data.message, userId: data.author, createdAt: rethinkdb.now() }).run(conn, (insertErr, res) => {
       if (insertErr) throw insertErr
+      console.log(res)
     })
 
   })
@@ -69,4 +77,26 @@ wss.on('connection', (ws) => {
     }, ws)
   })
 })
+
+app.post('/signup', (req, res) => {
+  const { userId, password } = req.query
+  console.log({ userId, password })
+  authManager.signup(userId, password).then((user) => {
+    res.send({ userId: user.id, authToken: user.authToken })
+  }, (error) => {
+    console.error(error)
+    res.status(500).send('Server error')
+  })
+})
+
+app.post('/login', (req, res) => {
+  const { userId, password } = req.query
+  authManager.login(userId, password).then((user) => {
+    res.send({ userId: user.id, authToken: user.authToken })
+  }, (error) => {
+    console.error(error)
+    res.status(500).send('Server error')
+  })
+})
+
 app.listen(3000)
