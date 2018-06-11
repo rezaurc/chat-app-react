@@ -17,6 +17,7 @@ export default class AuthWrapper extends React.Component {
       userId: window.localStorage.getItem('userId'),
       error: false
     }
+    this.handleLogout = this.handleLogout.bind(this)
   }
 
   componentWillMount() {
@@ -46,6 +47,7 @@ export default class AuthWrapper extends React.Component {
         if (err) {
           this.setState({error: true})
         } else {
+          console.log(this)
           const {authToken} = res.body
           window.localStorage.setItem('userId', userId)
           window.localStorage.setItem('authToken', authToken)
@@ -54,12 +56,18 @@ export default class AuthWrapper extends React.Component {
       });
   }
 
+  handleLogout() {
+    this.setState({ userId: null });
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('authToken');
+  }
+
   renderLoggedOut() {
     return (
       <div className="loggedOut">
         {this.state.error && <div>Authentication error</div>}
         <input type="text" placeholder="Username" ref="userId" autoFocus />
-        <input type="text" placeholder="Password" ref="password" />
+        <input type="password" placeholder="Password" ref="password" />
         <button type="button" onClick={this.handleButton.bind(this, 'login')}>
           Login
         </button>
